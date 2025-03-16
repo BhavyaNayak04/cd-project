@@ -1,0 +1,33 @@
+PROGRAM         → STATEMENT_LIST
+
+STATEMENT_LIST  → STATEMENT STATEMENT_LIST | ε
+
+STATEMENT       → VAR_DECL 
+                | PROCEDURE_DECL 
+                | ASSIGNMENT 
+                | IF_STATEMENT
+
+VAR_DECL        → IDENTIFIER ':' 'integer' ';'
+
+PROCEDURE_DECL  → 'Procedure' IDENTIFIER '(' PARAM_LIST ')' 
+                  STATEMENT_LIST 
+                  'end'
+
+PARAM_LIST      → IDENTIFIER ':' 'integer' | ε
+
+ASSIGNMENT      → IDENTIFIER ':=' EXPRESSION ';'
+
+EXPRESSION      → INTEGER 
+                | IDENTIFIER 
+                | EXPRESSION 'and' EXPRESSION 
+                | EXPRESSION '=' EXPRESSION
+
+IF_STATEMENT   → 'if' EXPRESSION 'then' 
+                 STATEMENT_LIST 
+                 ELSEIF_PART 
+                 ELSE_PART 
+                 'end if'
+
+ELSEIF_PART    → 'elseif' EXPRESSION 'then' STATEMENT_LIST | ε
+
+ELSE_PART      → 'else' STATEMENT_LIST | ε
