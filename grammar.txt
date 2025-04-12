@@ -1,33 +1,31 @@
-PROGRAM         → STATEMENT_LIST
+ProgramStart → Program
 
-STATEMENT_LIST  → STATEMENT STATEMENT_LIST | ε
+Program → Declarations Procedure
 
-STATEMENT       → VAR_DECL 
-                | PROCEDURE_DECL 
-                | ASSIGNMENT 
-                | IF_STATEMENT
+Declarations → Identifier : Type ;
 
-VAR_DECL        → IDENTIFIER ':' 'integer' ';'
+Type → integer
 
-PROCEDURE_DECL  → 'Procedure' IDENTIFIER '(' PARAM_LIST ')' 
-                  STATEMENT_LIST 
-                  'end'
+Procedure → procedure Identifier ( Parameter ) StatementBlock end Identifier
 
-PARAM_LIST      → IDENTIFIER ':' 'integer' | ε
+Parameter → Identifier : Type
 
-ASSIGNMENT      → IDENTIFIER ':=' EXPRESSION ';'
+StatementBlock → Statement
+StatementBlock → StatementBlock Statement
 
-EXPRESSION      → INTEGER 
-                | IDENTIFIER 
-                | EXPRESSION 'and' EXPRESSION 
-                | EXPRESSION '=' EXPRESSION
+Statement → Assignment ;
+Statement → IfStatement ;
+Statement → PrintStatement ;
 
-IF_STATEMENT   → 'if' EXPRESSION 'then' 
-                 STATEMENT_LIST 
-                 ELSEIF_PART 
-                 ELSE_PART 
-                 'end if'
+Assignment → Identifier := Number
 
-ELSEIF_PART    → 'elseif' EXPRESSION 'then' STATEMENT_LIST | ε
+IfStatement → if Condition then StatementBlock
+              elsif Condition then StatementBlock
+              else StatementBlock
+              end if
 
-ELSE_PART      → 'else' STATEMENT_LIST | ε
+Condition → Comparison and Comparison
+
+Comparison → Identifier = Number
+
+PrintStatement → printf ( String )
