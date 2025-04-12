@@ -1,4 +1,3 @@
-# tokenizer.py
 import re
 
 def tokenize(pseudocode):
@@ -17,7 +16,7 @@ def tokenize(pseudocode):
         ('SEMI', r';'),
         ('LPAREN', r'\('),
         ('RPAREN', r'\)'),
-        ('EQ', r'='), 
+        ('EQ', r'='),
         ('id', r'[a-zA-Z_][a-zA-Z_0-9]*'),
         ('num', r'\d+'),
         ('str', r'"[^"]*"'),
