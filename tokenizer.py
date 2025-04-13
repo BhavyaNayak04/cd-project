@@ -5,7 +5,7 @@ def tokenize(pseudocode):
         ('procedure', r'[Pp]rocedure'),
         ('if', r'[Ii]f'),
         ('then', r'then'),
-        ('elsif', r'[Ee]lsif'),
+        ('elseif', r'[Ee]lseif'),
         ('else', r'else'),
         ('end', r'end'),
         ('integer', r'integer'),

@@ -17,7 +17,7 @@ class Grammar:
             ("St", ["I", "SEMI"]),
             ("St", ["F", "SEMI"]),
             ("A", ["id", "ASSIGN", "num"]),
-            ("I", ["if", "C", "then", "S", "elsif", "C", "then", "S", "else", "S", "end", "if"]),
+            ("I", ["if", "C", "then", "S", "elseif", "C", "then", "S", "else", "S", "end", "if"]),
             ("C", ["Cmp", "and", "Cmp"]),
             ("Cmp", ["id", "EQ", "num"]),
             ("F", ["printf", "LPAREN", "str", "RPAREN"]),
@@ -27,7 +27,7 @@ class Grammar:
         # Define terminals and non-terminals
         self.terminals = {
             "id", "COLON", "integer", "SEMI", "procedure", "LPAREN", "RPAREN",
-            "ASSIGN", "num", "if", "then", "elsif", "else", "end", "and", "EQ", "printf", "str", "$"
+            "ASSIGN", "num", "if", "then", "elseif", "else", "end", "and", "EQ", "printf", "str", "$"
         }
 
         self.non_terminals = {
