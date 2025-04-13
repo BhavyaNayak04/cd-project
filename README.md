@@ -1,10 +1,8 @@
 # My Picky Compiler
 
-This project implements a compiler for a hypothetical programming language. The compiler includes lexical analysis (tokenization), syntax analysis (parsing), and visualization of the parse tree.
+This project implements a compiler for a hypothetical programming code snippet. The compiler includes lexical analysis (tokenization), syntax analysis (parsing), and visualization of the parse tree.
 
-## Language Example
-
-The compiler is designed to process code in the following hypothetical language:
+The compiler is designed to process the code:
 
 ```
 X: integer;
