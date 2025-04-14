@@ -1,35 +1,26 @@
-def visualize_parse_tree(node, prefix="", is_last=True):
-    """
-    Generate a string representation of a parse tree using ASCII art.
+from graphviz import Digraph
 
-    Args:
-        node: The current node in the parse tree
-        prefix: The prefix to use for the current line (for indentation)
-        is_last: Whether this node is the last child of its parent
+def visualize_parse_tree(parse_tree):
+    dot = Digraph(format='png', engine="dot")
+    node_count = [0]
 
-    Returns:
-        A string representation of the parse tree
-    """
-    if not node:
-        return ""
+    def add_nodes_edges(node, parent_id=None):
+        node_id = f"node{node_count[0]}"
+        node_count[0] += 1
 
-    result = ""
+        # Determine label
+        if node['type'] == 'terminal':
+            label = f"{node['symbol']}\n{node['value']}"
+        else:
+            label = node['symbol']
 
-    # Print current node
-    if node['type'] == 'terminal':
-        value = node['value'] if 'value' in node else node['symbol']
-        node_str = f"{node['symbol']}: {value}"
-    else:
-        node_str = node['symbol']
+        dot.node(node_id, label)
 
-    result += prefix
-    result += "└── " if is_last else "├── "
-    result += f"{node_str}\n"
+        if parent_id:
+            dot.edge(parent_id, node_id)
 
-    # Print children
-    children = node.get('children', [])
-    for i, child in enumerate(children):
-        new_prefix = prefix + ("    " if is_last else "│   ")
-        result += visualize_parse_tree(child, new_prefix, i == len(children) - 1)
+        for child in node.get('children', []):
+            add_nodes_edges(child, node_id)
 
-    return result
+    add_nodes_edges(parse_tree)
+    return dot
