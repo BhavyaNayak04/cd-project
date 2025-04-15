@@ -2,7 +2,47 @@ from grammar import Grammar
 from tokenizer import tokenize
 from LALR import LALR
 from visualizer import visualize_parse_tree
+from rich.console import Console
+from rich.table import Table
 import traceback
+
+def display_tokens_by_line(code, tokens, lexems):
+    lines = code.strip().split('\n')
+    token_index = 0
+    lexeme_items = list(lexems.items())
+
+    print("\nFormatted Tokens & Lexemes Per Line:\n")
+
+    for line_num, line in enumerate(lines):
+        print(f"Code Line {line_num+1}: {line.strip()}")
+
+        token_line = []
+        lexeme_line = []
+
+        while token_index < len(lexeme_items):
+            _, lexeme = lexeme_items[token_index]
+
+            if lexeme in line:
+                token_line.append(tokens[token_index])
+                lexeme_line.append(lexeme)
+                token_index += 1
+            else:
+                break
+
+        print(f"  Tokens : {' '.join(token_line)}")
+        print(f"  Lexems : {' | '.join(lexeme_line)}\n")
+
+def display_parsing_steps_table(parse_output):
+    console = Console()
+    table = Table(title="Parsing Steps", show_lines=True)
+
+    table.add_column("Step #", justify="right", style="cyan", no_wrap=True)
+    table.add_column("Action", style="magenta")
+
+    for i, step in enumerate(parse_output):
+        table.add_row(str(i + 1), step)
+
+    console.print(table)
 
 def main():
     # Example input code
@@ -20,13 +60,27 @@ end foo"""
 
     # Tokenize input
     tokens, lexems = tokenize(code)
-    print("Tokens:", tokens)
-    print("Lexems:", lexems)
 
-    # Print the tokenized form directly
-    token_str = ' '.join(tokens)
-    print("\nTokenized string format:")
-    print(token_str)
+    # Pretty print tokens and lexems
+    def display_token_lexem_table(tokens, lexems):
+        console = Console()
+        table = Table(title="Formatted Tokens and Lexems")
+
+        table.add_column("Index", justify="right", style="cyan", no_wrap=True)
+        table.add_column("Token", style="magenta")
+        table.add_column("Lexem", style="green")
+
+        for idx, token in enumerate(tokens):
+            lex = lexems.get(idx, "")
+            table.add_row(str(idx), token, lex)
+
+        console.print(table)
+
+    # Call the new table-rendering function
+    display_token_lexem_table(tokens, lexems)
+
+    # Line-by-line visual token & lexeme output ---
+    display_tokens_by_line(code, tokens, lexems)
 
     # Initialize grammar and parser
     try:
@@ -40,10 +94,8 @@ end foo"""
 
         # Print parsing output
         print("\nParsing Output:")
-        for step in parse_output:
-            print(step)
+        display_parsing_steps_table(parse_output)
 
-        # Check if parsing was successful
         if "Accept" in parse_output:
             print("\nParsing Successful!")
 
