@@ -62,12 +62,22 @@ end foo"""
     tokens, lexems = tokenize(code)
 
     # Pretty print tokens and lexems
-    print("\nFormatted Tokens and Lexems:")
-    print(f"{'Index':<6} {'Token':<12} {'Lexem'}")
-    print("-" * 35)
-    for idx, token in enumerate(tokens):
-        lex = lexems.get(idx, '')
-        print(f"{idx:<6} {token:<12} {lex}")
+    def display_token_lexem_table(tokens, lexems):
+        console = Console()
+        table = Table(title="Formatted Tokens and Lexems")
+
+        table.add_column("Index", justify="right", style="cyan", no_wrap=True)
+        table.add_column("Token", style="magenta")
+        table.add_column("Lexem", style="green")
+
+        for idx, token in enumerate(tokens):
+            lex = lexems.get(idx, "")
+            table.add_row(str(idx), token, lex)
+
+        console.print(table)
+
+    # Call the new table-rendering function
+    display_token_lexem_table(tokens, lexems)
 
     # Line-by-line visual token & lexeme output ---
     display_tokens_by_line(code, tokens, lexems)
