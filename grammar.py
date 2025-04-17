@@ -1,3 +1,8 @@
+from rich.console import Console
+from rich.table import Table
+from rich.text import Text
+from collections import defaultdict
+
 class Grammar:
     def __init__(self):
         # Define the grammar rules with adjusted token names
@@ -231,3 +236,71 @@ class Grammar:
                     goto_items.add(new_item)
 
         return self.closure(goto_items)
+    
+
+    def print_parse_table(self):
+        console = Console()
+
+        # Get all states
+        all_states = sorted(set(i for (i, _) in self.action.keys()) | set(i for (i, _) in self.goto.keys()))
+
+        # Terminals and non-terminals
+        terminals = sorted(self.terminals - {'$'}) + ['$']
+        non_terminals = sorted(self.non_terminals - {"P'"})  # Exclude augmented start
+
+        # Build ACTION table
+        action_table = defaultdict(dict)
+        for (state, token), entry in self.action.items():
+            action_table[state][token] = entry
+
+        # Build GOTO table
+        goto_table = defaultdict(dict)
+        for (state, nt), target in self.goto.items():
+            goto_table[state][nt] = target
+
+        # Print ACTION table
+        action_rich_table = Table(title="ACTION Table")
+        action_rich_table.add_column("State", justify="right")
+        for term in terminals:
+            action_rich_table.add_column(term, justify="center")
+
+        for state in all_states:
+            
+            row = [str(state)]
+
+            for term in terminals:
+                action = action_table[state].get(term, "")
+                if term=="$" and state==1:
+                    row.append(Text("acc", style="bold green"))
+                elif isinstance(action, tuple):
+                    if action[0] == 'shift':
+                        row.append(f"s{action[1]}")
+                    elif action[0] == 'reduce':
+                        row.append(f"r{action[1]}")
+                    elif action[0] == 'accept':
+                        # Highlight the accept cell
+                        row.append(Text("acc", style="bold green"))
+                    else:
+                        row.append("")
+                else:
+                    row.append("")
+            action_rich_table.add_row(*row)
+
+        console.print(action_rich_table)
+
+        # Print GOTO table
+        goto_rich_table = Table(title="GOTO Table")
+        goto_rich_table.add_column("State", justify="right")
+        for nt in non_terminals:
+            goto_rich_table.add_column(nt, justify="center")
+
+        for state in all_states:
+            row = [str(state)]
+            for nt in non_terminals:
+                target = goto_table[state].get(nt, "")
+                row.append(str(target) if target != "" else "")
+            goto_rich_table.add_row(*row)
+
+        console.print(goto_rich_table)
+
+

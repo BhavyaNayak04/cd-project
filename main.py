@@ -87,6 +87,7 @@ end foo"""
         print("\nInitializing grammar and parser...")
         grammar = Grammar()
         parser = LALR(grammar)
+        grammar.print_parse_table()
 
         # Parse the input
         print("\nParsing the input...")

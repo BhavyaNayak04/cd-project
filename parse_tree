@@ -1,0 +1,219 @@
+digraph {
+	node0 [label="P'"]
+	node1 [label=P]
+	node0 -> node1
+	node2 [label=Decl]
+	node1 -> node2
+	node3 [label="id
+X"]
+	node2 -> node3
+	node4 [label="COLON
+:"]
+	node2 -> node4
+	node5 [label=T]
+	node2 -> node5
+	node6 [label="integer
+integer"]
+	node5 -> node6
+	node7 [label="SEMI
+;"]
+	node2 -> node7
+	node8 [label=Proc]
+	node1 -> node8
+	node9 [label="procedure
+Procedure"]
+	node8 -> node9
+	node10 [label="id
+foo"]
+	node8 -> node10
+	node11 [label="LPAREN
+("]
+	node8 -> node11
+	node12 [label=Param]
+	node8 -> node12
+	node13 [label="id
+b"]
+	node12 -> node13
+	node14 [label="COLON
+:"]
+	node12 -> node14
+	node15 [label=T]
+	node12 -> node15
+	node16 [label="integer
+integer"]
+	node15 -> node16
+	node17 [label="RPAREN
+)"]
+	node8 -> node17
+	node18 [label=S]
+	node8 -> node18
+	node19 [label=S]
+	node18 -> node19
+	node20 [label=St]
+	node19 -> node20
+	node21 [label=A]
+	node20 -> node21
+	node22 [label="id
+b"]
+	node21 -> node22
+	node23 [label="ASSIGN
+:="]
+	node21 -> node23
+	node24 [label="num
+13"]
+	node21 -> node24
+	node25 [label="SEMI
+;"]
+	node20 -> node25
+	node26 [label=St]
+	node18 -> node26
+	node27 [label=I]
+	node26 -> node27
+	node28 [label="if
+If"]
+	node27 -> node28
+	node29 [label=C]
+	node27 -> node29
+	node30 [label=Cmp]
+	node29 -> node30
+	node31 [label="id
+x"]
+	node30 -> node31
+	node32 [label="EQ
+="]
+	node30 -> node32
+	node33 [label="num
+12"]
+	node30 -> node33
+	node34 [label="and
+and"]
+	node29 -> node34
+	node35 [label=Cmp]
+	node29 -> node35
+	node36 [label="id
+b"]
+	node35 -> node36
+	node37 [label="EQ
+="]
+	node35 -> node37
+	node38 [label="num
+13"]
+	node35 -> node38
+	node39 [label="then
+then"]
+	node27 -> node39
+	node40 [label=S]
+	node27 -> node40
+	node41 [label=St]
+	node40 -> node41
+	node42 [label=F]
+	node41 -> node42
+	node43 [label="printf
+printf"]
+	node42 -> node43
+	node44 [label="LPAREN
+("]
+	node42 -> node44
+	node45 [label="str
+\"by copy-in copy-out\""]
+	node42 -> node45
+	node46 [label="RPAREN
+)"]
+	node42 -> node46
+	node47 [label="SEMI
+;"]
+	node41 -> node47
+	node48 [label="elseif
+elseif"]
+	node27 -> node48
+	node49 [label=C]
+	node27 -> node49
+	node50 [label=Cmp]
+	node49 -> node50
+	node51 [label="id
+x"]
+	node50 -> node51
+	node52 [label="EQ
+="]
+	node50 -> node52
+	node53 [label="num
+13"]
+	node50 -> node53
+	node54 [label="and
+and"]
+	node49 -> node54
+	node55 [label=Cmp]
+	node49 -> node55
+	node56 [label="id
+b"]
+	node55 -> node56
+	node57 [label="EQ
+="]
+	node55 -> node57
+	node58 [label="num
+13"]
+	node55 -> node58
+	node59 [label="then
+then"]
+	node27 -> node59
+	node60 [label=S]
+	node27 -> node60
+	node61 [label=St]
+	node60 -> node61
+	node62 [label=F]
+	node61 -> node62
+	node63 [label="printf
+printf"]
+	node62 -> node63
+	node64 [label="LPAREN
+("]
+	node62 -> node64
+	node65 [label="str
+\"by address\""]
+	node62 -> node65
+	node66 [label="RPAREN
+)"]
+	node62 -> node66
+	node67 [label="SEMI
+;"]
+	node61 -> node67
+	node68 [label="else
+else"]
+	node27 -> node68
+	node69 [label=S]
+	node27 -> node69
+	node70 [label=St]
+	node69 -> node70
+	node71 [label=F]
+	node70 -> node71
+	node72 [label="printf
+printf"]
+	node71 -> node72
+	node73 [label="LPAREN
+("]
+	node71 -> node73
+	node74 [label="str
+\"A mystery\""]
+	node71 -> node74
+	node75 [label="RPAREN
+)"]
+	node71 -> node75
+	node76 [label="SEMI
+;"]
+	node70 -> node76
+	node77 [label="end
+end"]
+	node27 -> node77
+	node78 [label="if
+if"]
+	node27 -> node78
+	node79 [label="SEMI
+;"]
+	node26 -> node79
+	node80 [label="end
+end"]
+	node8 -> node80
+	node81 [label="id
+foo"]
+	node8 -> node81
+}
