@@ -1,8 +1,8 @@
 # My Picky Compiler
 
-This project implements a the first two important phases of a compiler (scan and parse) for a small hypothetical programming language. It performs **lexical analysis**, **syntax analysis**, and visualizes the **parse tree** as a generated image.
+This project implements the first two important phases of a compiler (scan and parse) for a small hypothetical programming language. It performs **lexical analysis**, **syntax analysis**, and visualizes the **parse tree** as a generated image.
 
-The compiler is designed to process this input code:
+It is designed to process this input code:
 
 ```
 X: integer;
