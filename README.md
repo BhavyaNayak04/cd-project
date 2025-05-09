@@ -1,8 +1,8 @@
 # My Picky Compiler
 
-This project implements a compiler for a hypothetical programming code snippet. The compiler includes lexical analysis (tokenization), syntax analysis (parsing), and visualization of the parse tree.
+This project implements a compiler for a small hypothetical programming language. It performs **lexical analysis**, **syntax analysis**, and visualizes the **parse tree** as a generated image.
 
-The compiler is designed to process the code:
+The compiler is designed to process this input code:
 
 ```
 X: integer;
@@ -18,87 +18,119 @@ Procedure foo(b: integer)
 end foo
 ```
 
+---
+
 ## Project Structure
 
-The project is divided into five separate files, each responsible for a specific part of the compilation process:
+The compiler is modular and organized into five main components:
 
-1. **grammar.py**: Contains the `Grammar` class that defines and processes the grammar rules, computes FIRST and FOLLOW sets, and builds the parsing table. Uses tuples for better hashability in LR(1) items.
+1. **`grammar.py`** – Defines grammar rules, computes FIRST/FOLLOW sets, builds the LR(1) parsing table.
+2. **`tokenizer.py`** – Splits input into tokens, respecting whitespace and special characters.
+3. **`parser.py`** – Builds the parse tree using LR(1) parsing from the token stream.
+4. **`visualizer.py`** – Generates a visual parse tree as an image using Graphviz.
+5. **`main.py`** – Coordinates all steps, prints token and parse info, and triggers visualization.
 
-2. **tokenizer.py**: Contains the `tokenize` function that splits the input pseudocode into tokens with proper handling of whitespace and special tokens.
+---
 
-3. **parser.py**: Contains the `Parser` class that handles the actual parsing process, building parse trees from the token stream using the grammar.
+## Key Features
 
-4. **visualizer.py**: Contains the `visualize_parse_tree` function for generating representations of the parse tree. Includes ASCII text visualizations.
+* Full lexical analysis (with token–lexeme table)
+* Generation of:
 
-5. **main.py**: Contains the `main` function that ties everything together - tokenizes the input, initializes the grammar, parses the tokens, and visualizes the results.
+  * **Goto Table**
+  * **Action Table**
+  * **Detailed Parsing Steps Table**
+* Parse tree image generation using **Graphviz**
+* Rich terminal formatting using **rich**
+
+---
 
 ## Installation
 
 ### Prerequisites
 
-- Python 3.7 or higher
-- pip (Python package installer)
+* Python 3.7 or higher
+* [Graphviz](https://graphviz.org/download/) (required for image generation)
+* pip (Python package installer)
 
 ### Setup
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/cd-project.git
-cd cd-project
-```
+1. **Clone the repository:**
 
-2. Install the required packages:
-```bash
-pip install numpy
-```
+   ```bash
+   git clone https://github.com/yourusername/cd-project.git
+   cd cd-project
+   ```
+
+2. **Install Python dependencies:**
+
+   ```bash
+   pip install numpy rich
+   ```
+
+3. **Install Graphviz:**
+
+   * Download from: [https://graphviz.org/download/](https://graphviz.org/download/)
+   * Add Graphviz to the system `PATH` (environment variables) so it can be accessed via command line.
+   * You can verify it's installed correctly with:
+
+     ```bash
+     dot -V
+     ```
+
+---
 
 ## Usage
 
-To run the compiler on a sample program:
+To run the compiler with the sample program:
 
 ```bash
 python main.py
 ```
 
-This will:
-1. Tokenize the input code
-2. Parse the tokens using the defined grammar
-3. Display the resulting parse tree both as ASCII art in the console
+The compiler will:
 
-### Customizing Input
+1. Tokenize the input source code
+2. Display a formatted **Token–Lexeme Table**
+3. Display **Goto Table** and **Action Table**
+4. Walk through the **LR(1) parsing steps**
+5. Generate a **parse tree image** (saved as `parse_tree.png`)
 
-To compile a different program, modify the input string in `main.py` or implement command-line argument handling to accept input files.
+---
 
-## Parse Tree Visualization
+## Output Example
 
-The project offers two types of parse tree visualization:
+Here's what the output includes:
 
-1. ASCII Text Visualization (console output)
-```
-S
-└── Program
-    ├── Declaration
-    │   └── VarDecl
-    │       ├── Identifier: X
-    │       └── Type: integer
-    └── ProcedureDecl
-        ├── Identifier: foo
-        ├── Parameters
-        │   └── Parameter
-        │       ├── Identifier: b
-        │       └── Type: integer
-        └── ...
-```
-## Extending the Compiler
+* **Lexical Analysis Table**
+* **Parsing Tables (Goto, Action)**
+* **Step-by-step LR(1) Parsing Process**
+* **Parse Tree Image** – Saved to the local folder as `parse_tree.png`
 
-To extend the compiler for additional language features:
+---
 
-1. Update the grammar rules in `grammar.py`
-2. Add any necessary token types in `tokenizer.py`
-3. Update the parsing logic in `parser.py` if needed
-4. Run the compiler to test your changes
+## Custom Input
+
+To compile a different program:
+
+* Edit the `program_code` string inside `main.py`
+* Or modify it to take input from a file or CLI in the future
+
+---
+
+## Extend the Compiler
+
+To add support for more language features:
+
+1. Update grammar rules in `grammar.py`
+2. Add new tokens in `tokenizer.py`
+3. Adjust parsing logic in `parser.py` as needed
+4. Rerun the compiler to test your changes
+
+---
 
 ## Troubleshooting
 
-- If you encounter parsing errors, verify that your input code adheres to the language syntax
-- Check the console output for any error messages that might help diagnose the problem
+* If the image doesn’t generate, make sure Graphviz is correctly installed and added to your system `PATH`.
+* Parsing errors typically mean the input code doesn't conform to the grammar.
+* Rich formatting issues can usually be solved by ensuring your terminal supports ANSI escape sequences.
